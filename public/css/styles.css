@@ -19,7 +19,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   background-color: var(--base-color);
-
+  font-family: "Fira Sans", sans-serif;
 }
 
 a {
