@@ -19,7 +19,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   background-color: var(--base-color);
-  font-family: "Fira Sans", sans-serif;
+  font-family: 'Fira Sans', sans-serif;
 }
 
 a {
@@ -140,14 +140,12 @@ li {
   color: var(--light-purple);
   font-size: 1.5rem;
   font-weight: 600;
-  
 }
 .text-container p {
   color: var(--text-color);
   font-size: 1.1rem;
   font-weight: 500;
   line-height: 1.5rem;
-
 }
 .btn {
   background-color: var(--light-purple);
@@ -180,7 +178,6 @@ h2 {
   list-style: disc;
   list-style-position: inside;
   list-style-type: disc;
-
 }
 .upgrades {
   display: flex;
@@ -198,7 +195,7 @@ h2 {
 }
 
 .card {
-  flex: 0 1 calc(50% - 1rem); 
+  flex: 0 1 calc(50% - 1rem);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -216,7 +213,6 @@ h2 {
 .card:hover {
   transform: scale(1.02);
   box-shadow: 0 0 10px rgb(46, 255, 248, 0.5);
-
 }
 
 footer {
@@ -246,8 +242,9 @@ footer {
   .siteName {
     font-size: 2rem;
   }
-  h2, h1 {
-    font-size: 2rem !important;
+  h2,
+  h1 {
+    font-size: 1.2rem !important;
   }
   .menu {
     justify-content: space-evenly;
@@ -256,27 +253,76 @@ footer {
     font-size: 1.2rem;
   }
   .text-container {
-    width: 350px;
-    
+    width: 200px;
   }
   .text-container p {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
   .content {
     padding-left: 1rem;
+  }
+  .btn {
+    margin-top: 0.8rem;
+    text-align: center;
+
+    
+  }
+  .img-containerr {
+    width: 90%;
+  }
+  .hero {
+    margin-bottom: 2rem;
+  }
+  .flex-container {
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .upgrades {
+    margin-top: 2rem;
+  }
+  .caracteristics {
+
+    margin-bottom: 0;
+    margin-top: 2rem;
+  }
+  .reviews li {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  
+  h1 {
+    font-size: 2rem !important;
+  }
+  h2 {
+    font-size: 1.5rem !important;
+  
+  }
+  .text-container {
+    min-width: 250px;
+  }
+  .text-container p {
+    font-size: 1rem;
   }
   .btn {
     margin-top: 1rem;
     text-align: center;
     width: 80%;
     padding: 1rem;
-  
   }
   .img-containerr {
-    width: 80%;
+    width: 90%;
   }
-  .hero {
-    margin-bottom: 2rem;
+    .img-containerr {
+    width: 90%;
+  }
+  .reviews li {
+    font-size: 1.2rem;
   }
   .flex-container {
     display: flex;
@@ -295,10 +341,6 @@ footer {
     width: 50%;
     margin-bottom: 0;
     margin-top: 2rem;
-    
+  }
   
-  }
-  .reviews li {
-    font-size: 1.2rem;
-  }
 }
