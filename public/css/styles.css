@@ -61,8 +61,10 @@ nav {
   width: 100%;
   background: var(--purple);
   padding: 0.5rem 1rem;
+  display: flex;
 }
-.menu {
+ul {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,25 +73,25 @@ nav {
 }
 li {
   color: var(--base-color);
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
   padding: 0.5rem;
   border: 2px solid transparent;
   transition: all 0.5s ease-in-out;
 }
 
-.menu li a {
+ul li a {
   color: var(--base-color);
   display: block;
   transition: all 0.5s ease-in-out;
 }
-.menu li:hover a {
+ul li:hover a {
   color: var(--text-hover);
   transform: scale(1.1);
   border-bottom: 2px solid var(--text-hover);
 }
 
-.menu li.active a {
+ul li.active a {
   display: block;
   color: var(--text-hover);
   border-bottom: 2px solid var(--text-hover);
@@ -111,7 +113,7 @@ li {
   display: flex;
   flex-direction: column;
   align-items: end;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 .caracteristics {
   margin-bottom: 2rem;
@@ -133,17 +135,18 @@ li {
   display: flex;
   flex-direction: column;
   align-items: start;
-  background: rgba(46, 255, 248, 0.5);
+  background: rgba(250, 253, 253, 0.5);
   border-radius: 1rem;
+  border: 1px solid var(--light-purple);
 }
 .text-container h2 {
   color: var(--light-purple);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 .text-container p {
   color: var(--text-color);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 500;
   line-height: 1.5rem;
 }
@@ -169,6 +172,13 @@ h2 {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1rem;
+}
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-bottom: 2rem;
 }
 
 .reviews li {
@@ -249,7 +259,7 @@ footer {
   .menu {
     justify-content: space-evenly;
   }
-  .menu li {
+  ul li {
     font-size: 1.2rem;
   }
   .text-container {
