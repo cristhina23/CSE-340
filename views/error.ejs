@@ -1,12 +1,6 @@
 <main class="error-container">
  <div class="error-img">
-   <% if (error && error.status === 404) { %>
-    <img src="/images/errors/error404.jpg" alt="Not Found">
-  <% } else if (error && error.status === 500) { %>
-    <img src="/images/errors/error500.png" alt="Server Error">
-  <% } else { %>
-    <img src="/images/errors/general-error.jpg" alt="Error">
-  <% } %>
+  <img src="<%= image %>" alt="Error Image" />
  </div>
    <%- content %> 
   </main>

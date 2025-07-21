@@ -110,12 +110,13 @@ Util.getParam = function(param) {
 
   Util.handleNotFound = async function (req, res) {
   let nav = await Util.getNav();
+  let image
   res.status(404).render("error", {
     title: "404 Not Found",
     message: "The page you are looking for does not exist.",
     content: "",
     nav,
-    error: err,
+    image: "/images/errors/error404.jpg" 
   });
 }
 
@@ -124,13 +125,23 @@ Util.handleServerError = async function (err, req, res, next) {
   let nav = await Util.getNav();
   const errorContent = Util.BuildErrorPage(err);
 
-   res.status(500).render("error", {
-    title: "500 Server Error",
-    message: "Something went wrong on the server.",
-    content: "",
+ 
+  let image;
+  if (err.status === 404) {
+    image = "/images/errors/error404.jpg";
+  } else {
+    image = "/images/errors/error500.png"; 
+  }
+
+  res.status(err.status || 500).render("error", {
+    title: err.status === 404 ? "404 Not Found" : "Server Error",
+    message: err.message || "Something went wrong",
+    content: errorContent,
     nav,
     error: err,
+    image, 
   });
 };
+
 
 module.exports = Util
