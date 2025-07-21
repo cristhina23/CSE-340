@@ -53,10 +53,40 @@ Util.buildClassificationGrid = async function(data){
     })
     grid += '</ul>'
   } else { 
-    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+    grid = '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }
   return grid
 }
+Util.BuildIndividualDetailPage = async function(inv_id){
+  const data = await invModel.getIndividualDetails(inv_id)
+  const vehicle = data
+  let section = '<section class="vehicle-detail">'
+  
+  section += `<div class="vehicle-img">`
+  section += `<img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">`
+  section += `</div>`
+
+  section += `<div class="vehicle-info">`
+  section += `<h2>${vehicle.inv_make} ${vehicle.inv_model} Details</h2>`
+  section += `<p class="price"><span>Price: </span>$${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</p>`
+  section += `<p class="description"><span>Description: </span>${vehicle.inv_description}</p>`
+  section += `<p><span>Color: </span> ${vehicle.inv_color}</p>`
+  section += `<p><span>Miles: </span> ${vehicle.inv_miles}</p>`
+  section += `</div>`
+
+  section += '</section>'
+  return section
+}
+
+Util.BuildErrorPage = function(error) {
+  let content = '<section class="error-page">'
+  content += `<h2>Oops! Something went wrong.</h2>`
+  content += `<p><strong>Error:</strong> ${error.message || "Internal Server Error"}</p>`
+  content += `<p>Please try again later or contact support.</p>`
+  content += '</section>'
+  return content
+}
+
 
 /****************************
  * Middleware For Handling Errors
@@ -64,5 +94,43 @@ Util.buildClassificationGrid = async function(data){
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+// Get the parameter
+
+Util.getParam = function(param) {
+  const query = window.location.search;
+  const urlParams = new URLSearchParams(query);
+  return urlParams.get(param);
+};
+
+/****************************
+ * Middleware For Handling Errors in pages
+ 
+ **************************************** */
+
+  Util.handleNotFound = async function (req, res) {
+  let nav = await Util.getNav();
+  res.status(404).render("error", {
+    title: "404 Not Found",
+    message: "The page you are looking for does not exist.",
+    content: "",
+    nav,
+    error: err,
+  });
+}
+
+Util.handleServerError = async function (err, req, res, next) {
+  console.error("Server Error:", err.stack);
+  let nav = await Util.getNav();
+  const errorContent = Util.BuildErrorPage(err);
+
+   res.status(500).render("error", {
+    title: "500 Server Error",
+    message: "Something went wrong on the server.",
+    content: "",
+    nav,
+    error: err,
+  });
+};
 
 module.exports = Util

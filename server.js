@@ -12,6 +12,8 @@ const static = require("./routes/static")
 const expressLayouts = require("express-ejs-layouts")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const errorTestRoute = require("./routes/errorTestRoute")
+const Util = require("./utilities/")
 const utilities = require("./utilities/")
 
 /* ***********************
@@ -30,7 +32,16 @@ app.use("/inv", inventoryRoute)
 
 // Index Route
 app.get("/", utilities.handleErrors(baseController.buildHome))
+app.use("/", errorTestRoute)
 
+
+
+/* ***********************
+ * Error Handling
+ *************************/
+
+app.use(Util.handleServerError)
+app.use(Util.handleNotFound)
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
