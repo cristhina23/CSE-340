@@ -4,7 +4,7 @@ const Util = {}
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
-Util.getNav = async function (req, res, next) {
+Util.getNav = async function (/*req, res, next*/) {
   let data = await invModel.getClassifications()
   console.log(data)
   let list = "<ul class='menu'>"
@@ -142,6 +142,8 @@ Util.handleServerError = async function (err, req, res, next) {
     image, 
   });
 };
+
+
 
 
 module.exports = Util

@@ -364,6 +364,104 @@ footer a {
 }
 
 
+.notice {
+  background-color: #dd7777; 
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  list-style: none;
+}
+
+.form-container {
+  
+  height: 100vh;
+  width: 80%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 3rem 2rem;
+  margin-bottom: 1rem;
+  background: #f5efef;
+  margin-top: 1rem;
+}
+
+label {
+  font-weight: 600;
+  margin-top: 1rem;
+  color: #37474f;
+}
+
+input {
+  padding: 0.6rem;
+  margin-top: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: var(--light-purple);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(144, 123, 201, 0.2);
+}
+
+.password-requirements {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #888;
+}
+.form-requirements {
+  text-align: end;
+  font-size: 0.8rem;
+  color: #888;
+}
+/* Error Message */
+.error-msg {
+  color: #d32f2f;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+/* Submit Button */
+.form-button {
+  margin-top: 1.8rem;
+  padding: 0.75rem;
+  background-color: var(--light-purple);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: var(--purple);
+}
+.form-footer {
+  text-align: center;
+  margin-top: 1rem;
+}
+.form-footer a {
+  color: var(--light-purple);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+input:required:invalid, input:focus:invalid {
+  border-color: red;
+}
+input:required:valid, input:focus:valid {
+  border-color: green;
+}
+
 /* Media Queries  medium screens*/
 @media screen and (min-width: 768px) {
   body {
@@ -438,6 +536,9 @@ footer a {
   }
   .namePrice h2 {
     font-size: 1rem;
+  }
+  .form-container {
+    max-width: 400px;
   }
   
 }
@@ -523,6 +624,9 @@ footer a {
   }
   .namePrice h2 {
     font-size: 1.2rem;
+  }
+  .form-container {
+    max-width: 600px;
   }
 
 }
