@@ -22,6 +22,21 @@ const messages = require("express-messages")
 const pool = require('./database/')
 const accountController = require('./controllers/accountController')
 const accountRoute = require('./routes/accountRoute')
+const bodyParser = require("body-parser")
+
+
+
+/* ***********************
+ * Static files
+ *************************/
+app.use(express.static("public"));
+
+/* ***********************
+ * Set View Engine
+ *************************/
+app.set("view engine", "ejs")
+app.use(expressLayouts)
+app.set("layout","./layouts/layout")
 
 /* ***********************
  * Middleware (BEFORE ROUTES)
@@ -39,25 +54,15 @@ app.use(session({
   name: 'sessionId',
 }))
 
-// Flash and messages middleware
-app.use(flash())
+// Express Messages Middleware
+app.use(require('connect-flash')())
 app.use(function(req, res, next){
-  res.locals.messages = messages(req, res)
-  res.locals.message = req.flash("notice") // Optional if you want to use this directly
+  res.locals.messages = require('express-messages')(req, res)
   next()
 })
 
-/* ***********************
- * Static files
- *************************/
-app.use(static)
-
-/* ***********************
- * Set View Engine
- *************************/
-app.set("view engine", "ejs")
-app.use(expressLayouts)
-app.set("layout","./layouts/layout")
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 /* ***********************
  * Routes

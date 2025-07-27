@@ -17,7 +17,7 @@
       type="email"
       id="account_email"
       name="account_email"
-      placeholder="example@email.com"
+      placeholder="Enter a valid email address"
       required
       maxlength="100"
       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
@@ -26,16 +26,24 @@
 
     <!-- Password -->
     <label for="account_password">Password</label>
-    <input
-      type="password"
-      id="account_password"
-      name="account_password"
-      required
-      minlength="8"
-      maxlength="100"
-      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{12,}$"
-      placeholder=" Password"
-    />
+   <div class="password">
+      <input
+        type="password"
+        id="account_password"
+        name="account_password"
+        required
+        minlength="12"
+        maxlength="100"
+        pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{12,}"
+        placeholder=" Password"
+      />
+      <img
+        src="/images/site/close-eye.svg"
+        alt=" toggle password visibility"
+        id="togglePassword"
+        class="password-icon"
+      />
+    </div>
     <p class="password-requirements"
       >Must contain at least 1 uppercase, 1 lowercase, 1 number, 1 special character, and 12 or more characters</p
     >

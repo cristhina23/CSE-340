@@ -462,6 +462,25 @@ input:focus:valid {
   border-color: green;
 }
 
+.password {
+  position: relative;
+  width: 100%;
+}
+.password input {
+  width: 100%;
+}
+#togglePassword {
+  position: absolute;
+  top: 55%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 20px;
+}
+#togglePassword:hover {
+  color: var(--light-purple);
+   width: 24px;
+}
 /* Media Queries  medium screens*/
 @media screen and (min-width: 768px) {
   body {

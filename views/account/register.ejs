@@ -10,54 +10,52 @@
 
   <form action="/account/register" method="post" class="form-card" id="registerForm" novalidate>
     <p class="form-requirements">All fields are required</p>
-    <label for="first_name">
-      First Name</label>
-      <input
-        type="text"
-        id="first_name"
-        name="first_name"
-        placeholder="ex: John"
-        required
-        maxlength="100"
-      />
-    
-    <label for="last_name">
+    <label for="first_name"> First Name</label>
+    <input
+      type="text"
+      id="account_firstname"
+      name="account_firstname"
+      placeholder="ex: John"
+      required
+      maxlength="100"
+    />
 
-      Last Name</label>
-      <input
-        type="text"
-        id="last_name"
-        name="last_name"
-        placeholder="ex: Doe"
-        required
-        maxlength="100"
-      />
-    
+    <label for="last_name"> Last Name</label>
+    <input type="text" id="account_lastname" name="account_lastname" placeholder="ex: Doe" required maxlength="100" />
+
     <!-- Email -->
     <label for="account_email">Email</label>
     <input
       type="email"
       id="account_email"
       name="account_email"
-      placeholder="example@email.com"
+      placeholder="Enter a valid email address"
       required
       maxlength="100"
-      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+      pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
     />
     <small id="emailError" class="error-msg"></small>
 
     <!-- Password -->
-    <label for="account_password">Password</label>
-    <input
-      type="password"
-      id="account_password"
-      name="account_password"
-      required
-      minlength="8"
-      maxlength="100"
-      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{12,}$"
-      placeholder=" Password"
-    />
+    <label for="account_password">Password </label>
+    <div class="password">
+      <input
+        type="password"
+        id="account_password"
+        name="account_password"
+        required
+        minlength="12"
+        maxlength="100"
+        pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{12,}"
+        placeholder=" Password"
+      />
+      <img
+        src="/images/site/close-eye.svg"
+        alt=" toggle password visibility"
+        id="togglePassword"
+        class="password-icon"
+      />
+    </div>
 
     <p class="password-requirements"
       >Must contain at least 1 uppercase, 1 lowercase, 1 number, 1 special character and 12 or more characters</p
@@ -69,3 +67,5 @@
 
   <p class="form-footer"> You already have an account? <a href="/account/register">Login</a> </p>
 </div>
+
+
