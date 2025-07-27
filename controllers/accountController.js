@@ -14,7 +14,7 @@ accountCont.buildMyAccount = async function(req, res, next) {
 /* ****************************************
 *  Deliver registration view
 * *************************************** */
-async function buildRegister(req, res, next) {
+accountCont.buildRegister = async function(req, res, next) {
   let nav = await utilities.getNav()
   res.render("account/register", {
     title: "Register",
