@@ -12,4 +12,14 @@ async function registerAccount(account_firstname, account_lastname, account_emai
   }
 }
 
-module.exports = {registerAccount}
+async function checkExistingEmail(account_email) {
+  try {
+    const sql = "SELECT * FROM account WHERE account_email = $1"
+    const result = await pool.query(sql, [account_email])
+    return result.rowCount > 0
+  } catch (error) {
+    throw error
+  }
+}
+
+module.exports = {registerAccount , checkExistingEmail}

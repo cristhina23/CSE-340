@@ -2,13 +2,19 @@
 <div class="form-container">
   <h1><%= title %></h1>
 
-  <% if (message) { %>
+  <% if (typeof message !== 'undefined' && message) { %>
   <div class="flash-message">
     <p><%= message %></p>
   </div>
+  <% } %> <% if (typeof errors !== 'undefined' && errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
   <% } %>
 
-  <form action="/account/register" method="post" class="form-card" id="registerForm" novalidate>
+  <form action="/account/register" for="registerForm" method="post" class="form-card" id="registerForm" novalidate>
     <p class="form-requirements">All fields are required</p>
     <label for="first_name"> First Name</label>
     <input
@@ -18,10 +24,19 @@
       placeholder="ex: John"
       required
       maxlength="100"
+      value="<%= locals.account_firstname %>"
     />
 
     <label for="last_name"> Last Name</label>
-    <input type="text" id="account_lastname" name="account_lastname" placeholder="ex: Doe" required maxlength="100" />
+    <input
+      type="text"
+      id="account_lastname"
+      name="account_lastname"
+      placeholder="ex: Doe"
+      required
+      maxlength="100"
+      value="<%= locals.account_lastname %>"
+    />
 
     <!-- Email -->
     <label for="account_email">Email</label>
@@ -33,6 +48,7 @@
       required
       maxlength="100"
       pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+      value="<%= locals.account_email %>"
     />
     <small id="emailError" class="error-msg"></small>
 
@@ -65,7 +81,5 @@
     <button class="form-button" type="submit">Register</button>
   </form>
 
-  <p class="form-footer"> You already have an account? <a href="/account/register">Login</a> </p>
+  <p class="form-footer"> You already have an account? <a href="/account/login">Login</a> </p>
 </div>
-
-

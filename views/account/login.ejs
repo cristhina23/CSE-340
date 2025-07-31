@@ -2,11 +2,18 @@
 <div class="form-container">
   <h1><%= title %></h1>
 
-  <% if (message) { %>
+    <% if (typeof message !== 'undefined' && message) { %>
   <div class="flash-message">
     <p><%= message %></p>
   </div>
+  <% } %> <% if (typeof errors !== 'undefined' && errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
   <% } %>
+
 
   <form action="/account/login" method="post" class="form-card" id="loginForm" novalidate>
     <p class="form-requirements">All fields are required</p>

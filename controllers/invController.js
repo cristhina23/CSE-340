@@ -57,6 +57,52 @@ invCont.buildByInventoryId = async function (req, res, next) {
   }
 }
 
+invCont.buildManageInventory = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav();
+    const success = req.flash("success");
+    const notice = req.flash("notice");
+    res.render("inventory/management", {
+      title: "Manage Inventory",
+      nav,
+      message: success.length > 0 ? success[0] : notice.length > 0 ? notice[0] : null,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
+invCont.buildAddClassification = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav();
+    res.render("inventory/add-classification", {
+      title: "Add Classification",
+
+      nav,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
+invCont.addClassification = async function (req, res, next) {
+  const { classification_name } = req.body;
+  try {
+    const data = await invModel.addNewClassification(classification_name);
+
+    if (data) {
+      req.flash("success", `Congratulations, you have registered a new classification: ${classification_name}`);
+      res.redirect("/inv"); 
+    } else {
+      req.flash("notice", "Sorry, the registration failed.");
+      res.redirect("/inv/add-classification"); 
+    }
+  } catch (error) {
+    console.error("error in addClassification:", error);
+    next(error);
+  }
+};
+
 
 
 module.exports = invCont

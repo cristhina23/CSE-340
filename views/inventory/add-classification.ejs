@@ -1,0 +1,22 @@
+<div class="form-container">
+  <h1><%= title %></h1>
+
+    
+
+  <div class="form-card">
+    <form action="/inv/add-classification" method="post" class="form-card" id="addClassificationForm" novalidate>
+      <p class="password-requirements">Field is required</p>
+      <label for="classification_name">Clasification Name</label>
+      <input
+        type="text"
+        id="classification_name"
+        name="classification_name"
+        placeholder="ex: SUV"
+        required
+        maxlength="100"
+      />
+      <p class="password-requirements">Name must be alphabetic characters only</p>
+      <button type="submit" class="btn mt">Add Clasification</button>
+    </form>
+  </div>
+</div>
