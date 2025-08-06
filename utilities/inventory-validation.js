@@ -95,11 +95,11 @@ invValidate.checkInventoryData = async (req, res, next) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     const nav = await utilities.getNav()
-    const classificationList = await utilities.buildClassificationList(req.body.classification_id)
+    const classificationSelect = await utilities.buildClassificationList(req.body.classification_id)
     res.render("inventory/add-inventory", {
       title: "Add Inventory",
       nav,
-      classificationList,
+      classificationSelect,
       errors: errors.array(),
       message: null,
       ...req.body

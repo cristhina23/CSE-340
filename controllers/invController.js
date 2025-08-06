@@ -104,5 +104,69 @@ invCont.addClassification = async function (req, res, next) {
 };
 
 
+invCont.buildAddInventory = async function (req, res, next) {
+  try {
+    const nav = await utilities.getNav()
+    const success = req.flash("success");
+    const notice = req.flash("notice");
+    let message = success.length > 0 ? success[0] : notice.length > 0 ? notice[0] : null;
+    const classificationSelect = await utilities.buildClassificationList() 
+
+    res.render("inventory/add-inventory", {
+      title: "Add Inventory",
+      nav,
+       message,
+      classificationSelect, 
+      inv_make: "",
+      inv_model: "",
+      inv_year: "",
+      inv_description: "",
+      inv_image: "/images/vehicles/no-image.png",
+      inv_thumbnail: "/images/vehicles/no-image-tn.png",
+      inv_price: "",
+      inv_miles: "",
+      inv_color: "",
+      errors: null
+    })
+  } catch (error) {
+    console.error(error)
+    next(error)
+  }
+}
+
+
+invCont.addInventory = async function (req, res) {
+  const nav = await utilities.getNav();
+  const classificationSelect = await utilities.buildClassificationList();
+
+  try {
+    const result = await invModel.addInventory(req.body);
+
+    if (result) {
+      req.flash("notice", "New vehicle added.");
+      return res.redirect("/inv");
+    } else {
+      res.render("inventory/add-inventory", {
+        title: "Add Inventory",
+        nav,
+        classificationSelect,
+        message: null,
+        errors: [{ msg: "Failed to add vehicle." }],
+        ...req.body
+      });
+    }
+  } catch (error) {
+    console.error("Error adding inventory:", error);
+    res.render("inventory/add-inventory", {
+      title: "Add Inventory",
+      nav,
+      classificationSelect,
+      message: null,
+      errors: [{ msg: "An unexpected error occurred." }],
+      ...req.body
+    });
+  }
+};
+
 
 module.exports = invCont
