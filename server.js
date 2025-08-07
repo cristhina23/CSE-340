@@ -13,8 +13,7 @@ const static = require("./routes/static")
 const expressLayouts = require("express-ejs-layouts")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
-const errorTestRoute = require("./routes/errorTestRoute")
-const Util = require("./utilities/")
+  const errorTestRoute = require("./routes/errorTestRoute")
 const utilities = require("./utilities/")
 const session = require("express-session")
 const flash = require("connect-flash")
@@ -23,6 +22,7 @@ const pool = require('./database/')
 const accountController = require('./controllers/accountController')
 const accountRoute = require('./routes/accountRoute')
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
 
 
 
@@ -62,7 +62,10 @@ app.use(function(req, res, next){
 })
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true })) 
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
+
 
 /* ***********************
  * Routes
@@ -78,8 +81,8 @@ app.use("/account", accountRoute)
 /* ***********************
  * Error Handling
  *************************/
-app.use(Util.handleServerError)
-app.use(Util.handleNotFound)
+app.use(utilities.handleServerError)
+app.use(utilities.handleNotFound)
 
 /* ***********************
  * Local Server Information

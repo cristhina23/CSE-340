@@ -65,11 +65,8 @@ const accountModel = require("../models/account-model")
       // valid email is required and cannot already exist in the DB
       body("account_email")
       .trim()
-      .escape()
       .notEmpty()
-      .isEmail()
-      .normalizeEmail() // refer to validator.js docs
-      .withMessage("A valid email is required."),
+      .withMessage("Password is required."),
       
   
       // password is required and must be strong password
@@ -96,16 +93,16 @@ validate.checkLoginData = async (req, res, next) => {
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
-    let nav = await utilities.getNav()
-    res.render("account/register", {
-      errors,
-      title: "Registration",
-      nav,
-      account_email,
-      account_password
-    })
-    return
-  }
+  let nav = await utilities.getNav()
+  res.render("account/login", {
+    errors,
+    title: "Login",
+    nav,
+    account_email,
+    account_password
+  })
+  return
+}
   next()
 }
 

@@ -1,6 +1,8 @@
 const utilities = require("../utilities/")
 const accountModel = require("../models/account-model")
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 const accountCont = {}
 
@@ -17,7 +19,7 @@ accountCont.buildMyAccount = async function(req, res, next) {
   res.render("account/login", { 
     title: "Login", 
     nav,
-    message: message.length > 0 ? message[0] : null
+    message,
   })
 }
 
@@ -78,6 +80,62 @@ accountCont.buildRegister = async function(req, res, next) {
     req.flash("notice", "Sorry, the registration failed.")
     res.redirect("/account/register")
   }
+}
+
+/* ****************************************
+ *  Process login request
+ * ************************************ */
+accountCont.accountLogin = async function (req, res) {
+  let nav = await utilities.getNav()
+  const { account_email, account_password } = req.body
+  const accountData = await accountModel.getAccountByEmail(account_email)
+  if (!accountData) {
+    req.flash("notice", "Please check your credentials and try again.")
+    res.status(400).render("account/login", {
+      title: "Login",
+      nav,
+      errors: null,
+      account_email,
+    })
+    return
+  }
+  console.log("Password ingresado:", account_password)
+console.log("Password en BD:", accountData.account_password)
+  try {
+    if (await bcrypt.compare(account_password, accountData.account_password)) {
+      delete accountData.account_password
+      const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+      if(process.env.NODE_ENV === 'development') {
+        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+      } else {
+        res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+      }
+      return res.redirect("/account")
+    }
+    else {
+      req.flash("notice", "Please check your credentials and try again.")
+      res.status(400).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+        account_email,
+      })
+    }
+  } catch (error) {
+    throw new Error('Access Forbidden')
+  }
+}
+
+accountCont.manageAccount = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  let notice = req.flash("notice")
+  let success = req.flash("success")
+  let message = notice.length > 0 ? notice[0] : success.length > 0 ? success[0] : null
+  res.render("account/my-account", { 
+    title: "My Account", 
+    nav,
+    message,
+  })
 }
 
 
