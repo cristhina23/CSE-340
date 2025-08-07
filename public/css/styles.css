@@ -560,51 +560,56 @@ select:focus {
 }
 
 .form-card-inventory p {
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    color: #555;
-  }
-  .form-card-inventory a {
-    color: var(--light-purple);
-  }
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #555;
+}
+.form-card-inventory a {
+  color: var(--light-purple);
+}
 
-  table#inventoryDisplay {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1.5rem;
-    font-size: 0.95rem;
-  }
+table#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+}
 
-  table#inventoryDisplay th,
-  table#inventoryDisplay td {
-    border: 1px solid #ccc;
-    padding: 0.75rem 1rem;
-    text-align: left;
-  }
+table#inventoryDisplay th,
+table#inventoryDisplay td {
+  border: 1px solid #ccc;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
 
-  table#inventoryDisplay th {
-    background-color: #e3e9f0;
-    color: #333;
-  }
+table#inventoryDisplay th {
+  background-color: #e3e9f0;
+  color: #333;
+}
 
-  table#inventoryDisplay tr:nth-child(even) {
-    background-color: #f0f4f8;
-  }
+table#inventoryDisplay tr:nth-child(even) {
+  background-color: #f0f4f8;
+}
 
-  table#inventoryDisplay tr:hover {
-    background-color: #d0e4ff;
-  }
+table#inventoryDisplay tr:hover {
+  background-color: #d0e4ff;
+}
 
-  noscript {
-    display: block;
-    margin-top: 1rem;
-    padding: 1rem;
-    background-color: #ffe0e0;
-    color: #900;
-    font-weight: bold;
-    border-radius: 8px;
-    text-align: center;
-  }
+noscript {
+  display: block;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #ffe0e0;
+  color: #900;
+  font-weight: bold;
+  border-radius: 8px;
+  text-align: center;
+}
+
+button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
 
 /* Media Queries  medium screens*/
 @media screen and (min-width: 768px) {
