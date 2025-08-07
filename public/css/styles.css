@@ -105,6 +105,16 @@ ul li.active a {
   border-bottom: 2px solid var(--text-hover);
 }
 
+#tools {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+}
+#tools a {
+  color: var(--light-purple);
+}
+
 .container {
   width: 90%;
   margin: 0 auto;
