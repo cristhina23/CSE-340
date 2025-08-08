@@ -656,6 +656,16 @@ button:disabled {
   font-size: 1.2rem;
   color: #333;
 }
+.account-update-form {
+  width: 90%;
+  margin: 0 auto;
+  
+}
+.account-update-form p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #555;
+}
 
 /* Media Queries  medium screens*/
 @media screen and (min-width: 768px) {
@@ -743,6 +753,9 @@ button:disabled {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
+  }
+  .account-update-form {
+    max-width: 600px;
   }
 }
 

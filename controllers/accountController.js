@@ -142,6 +142,54 @@ accountCont.manageAccount = async function (req, res, next) {
   })
 }
 
+accountCont.buildUpdateAccount = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const accountData = res.locals.accountData
+  res.render("account/update-account", {
+    title: "Update Account",
+    nav,
+    errors: null,
+    message: null,
+    account_firstname: accountData.account_firstname,
+    account_lastname: accountData.account_lastname,
+    account_email: accountData.account_email,
+    account_id: accountData.account_id
+  })
+}
+
+accountCont.updateAccountInfo = async function (req, res) {
+  const { account_firstname, account_lastname, account_email, account_id } = req.body
+  const result = await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email)
+  
+  if (result) {
+    req.flash("success", "Account information updated successfully.")
+    res.redirect("/account/")
+  } else {
+    req.flash("notice", "Update failed. Please try again.")
+    res.redirect(`/account/update/${account_id}`)
+  }
+}
+
+accountCont.updateAccountPassword = async function (req, res) {
+  const { account_password, account_id } = req.body
+  const hashedPassword = await bcrypt.hash(account_password, 10)
+  const result = await accountModel.updatePassword(account_id, hashedPassword)
+
+  if (result) {
+    req.flash("success", "Password updated successfully.")
+    res.redirect("/account/")
+  } else {
+    req.flash("notice", "Password update failed. Please try again.")
+    res.redirect(`/account/update/${account_id}`)
+  }
+}
+
+// Logout
+accountCont.logout = async function (req, res) {
+  res.clearCookie("jwt") 
+  req.flash("success", "You have successfully logged out.")
+  res.redirect("/") 
+}
 
 
 module.exports = accountCont

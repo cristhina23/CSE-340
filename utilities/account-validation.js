@@ -141,4 +141,68 @@ validate.checkExistingEmail = async function(account_email){
     return error.message
   }
 }
+
+
+validate.updateAccountRules = () => {
+  return [
+    body("account_firstname").trim().isLength({ min: 1 }).withMessage("First name is required."),
+    body("account_lastname").trim().isLength({ min: 1 }).withMessage("Last name is required."),
+    body("account_email").trim().isEmail().withMessage("A valid email is required.")
+  ]
+}
+
+validate.checkUpdateAccountData = (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = utilities.getNav()
+    res.render("account/update-account", {
+      title: "Update Account",
+      nav,
+      errors: errors.array(),
+      message: null,
+      account_firstname: req.body.account_firstname,
+      account_lastname: req.body.account_lastname,
+      account_email: req.body.account_email,
+      account_id: req.body.account_id
+    })
+    return
+  }
+  next()
+}
+
+validate.updatePasswordRules = () => {
+  return [
+    body("account_password")
+      .trim()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1
+      })
+      .withMessage("Password must be at least 12 characters long and include uppercase, number, and special character.")
+  ]
+}
+
+validate.checkUpdatePasswordData = (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = utilities.getNav()
+    res.render("account/update-account", {
+      title: "Update Account",
+      nav,
+      errors: errors.array(),
+      message: null,
+      account_firstname: res.locals.accountData.account_firstname,
+      account_lastname: res.locals.accountData.account_lastname,
+      account_email: res.locals.accountData.account_email,
+      account_id: req.body.account_id
+    })
+    return
+  }
+  next()
+}
+
+
 module.exports = validate
