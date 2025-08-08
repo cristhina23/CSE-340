@@ -43,7 +43,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
     return next(err);
   } 
  
-  const section = await utilities.BuildIndividualDetailPage(inv_id)
+  const section = await utilities.getInventoryById(inv_id)
   let nav = await utilities.getNav()
 
     res.render("./inventory/detail", {

@@ -131,12 +131,17 @@ accountCont.manageAccount = async function (req, res, next) {
   let notice = req.flash("notice")
   let success = req.flash("success")
   let message = notice.length > 0 ? notice[0] : success.length > 0 ? success[0] : null
+  
   res.render("account/my-account", { 
     title: "My Account", 
     nav,
     message,
+    account_firstname: res.locals.accountData.account_firstname,
+    account_type: res.locals.accountData.account_type,
+    account_id: res.locals.accountData.account_id
   })
 }
+
 
 
 module.exports = accountCont

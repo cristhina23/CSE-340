@@ -1,4 +1,4 @@
-<div class="form-container">
+<div class="form-container account">
   <h1><%= title %></h1>
 
   <% if (typeof message !== 'undefined' && message) { %>
@@ -13,5 +13,19 @@
   </ul>
   <% } %>
 
-  <h2>You're logged in</h2>
+  <div class="form-content">
+    <div class="form-card">
+      <h2 class="h3">Welcome <%= account_firstname %></h2>
+
+      <!-- Siempre visible -->
+      <p><a href="/account/update/<%= account_id %>">Update Account Information</a></p>
+    </div>
+
+    <div class="form-card">
+      <% if (account_type === 'Employee' || account_type === 'Admin') { %>
+      <h3 class="h3">Inventory Management</h3>
+      <p><a href="/inv">Manage Inventory</a></p>
+      <% } %>
+    </div>
+  </div>
 </div>
