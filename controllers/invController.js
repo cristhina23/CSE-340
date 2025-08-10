@@ -183,24 +183,20 @@ invCont.buildAddInventory = async function (req, res, next) {
 invCont.addInventory = async function (req, res) {
   const nav = await utilities.getNav();
   const classificationSelect = await utilities.buildClassificationList();
-  let success = req.flash("success");
-  let notice = req.flash("notice");
-
-  let message = success.length > 0 ? success[0] : notice.length > 0 ? notice[0] : null;
 
   try {
-    
-    const vehicle = await invModel.addInventory(req.body);
+    const result = await invModel.addInventory(req.body);
 
-    if (vehicle) {
-      const userId = req.session.account_id; 
+    if (result) {
+      const { inv_make, inv_model, inv_year, inv_price } = result; // ahora vienen de result
+      const userId = req.session?.account_id;
 
       await historyModel.logVehicleAddition(
-        vehicle.inv_id,
-        vehicle.inv_make,
-        vehicle.inv_model,
-        vehicle.inv_year,
-        vehicle.inv_price,
+        result.inv_id,
+        inv_make,
+        inv_model,
+        inv_year,
+        inv_price,
         userId
       );
 
@@ -211,7 +207,6 @@ invCont.addInventory = async function (req, res) {
         title: "Add Inventory",
         nav,
         classificationSelect,
-        message: null,
         errors: [{ msg: "Failed to add vehicle." }],
         ...req.body
       });
@@ -222,7 +217,6 @@ invCont.addInventory = async function (req, res) {
       title: "Add Inventory",
       nav,
       classificationSelect,
-      message: null,
       errors: [{ msg: "An unexpected error occurred." }],
       ...req.body
     });

@@ -50,12 +50,10 @@ async function addNewClassification(classification_name) {
 
 async function addInventory(data) {
   try {
-    const sql = `
-      INSERT INTO inventory 
+    const sql = `INSERT INTO inventory 
       (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id)
       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
-      RETURNING *;
-    `;
+      RETURNING *;`; // 👈 Esto devuelve el registro insertado
     const values = [
       data.inv_make,
       data.inv_model,
@@ -69,12 +67,12 @@ async function addInventory(data) {
       data.classification_id
     ];
     const result = await pool.query(sql, values);
-    return result.rows[0]; // ✅ ahora devuelve el vehículo insertado
+    return result.rows[0]; // 👈 Ahora devolvemos el vehículo entero
   } catch (err) {
     console.error("Inventory insert error:", err);
     return null;
   }
-};
+}
 
 
 /* ***************************
