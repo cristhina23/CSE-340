@@ -48,11 +48,14 @@ async function addNewClassification(classification_name) {
   }
 }
 
- async function addInventory (data) {
+async function addInventory(data) {
   try {
-    const sql = `INSERT INTO inventory 
+    const sql = `
+      INSERT INTO inventory 
       (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id)
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`;
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+      RETURNING *;
+    `;
     const values = [
       data.inv_make,
       data.inv_model,
@@ -65,12 +68,14 @@ async function addNewClassification(classification_name) {
       data.inv_color,
       data.classification_id
     ];
-    return (await pool.query(sql, values)).rowCount;
+    const result = await pool.query(sql, values);
+    return result.rows[0]; // ✅ ahora devuelve el vehículo insertado
   } catch (err) {
     console.error("Inventory insert error:", err);
     return null;
   }
 };
+
 
 /* ***************************
  *  Update Inventory Data

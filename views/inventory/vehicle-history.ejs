@@ -1,38 +1,40 @@
+<h1><%= title %></h1>
 
-  <h1><%= title %></h1>
-
-  <table class="history-table">
-    <thead>
-      <tr>
-        <th>Make</th>
-        <th>Model</th>
-        <th>Year</th>
-        <th>Price</th>
-        <th>Added By</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if (history.length > 0) { %>
-        <% history.forEach(record => { %>
-          <tr>
-            <td><%= record.make %></td>
-            <td><%= record.model %></td>
-            <td><%= record.year %></td>
-            <td>$<%= record.price.toFixed(2) %></td>
-            <td>
-              <%= record.account_firstname ? record.account_firstname + " " + record.account_lastname : "Unknown" %>
-            </td>
-            <td><%= new Date(record.change_date).toLocaleString() %></td>
-          </tr>
-        <% }) %>
-      <% } else { %>
+<table class="history-table">
+  <thead>
+    <tr>
+      <th>Make</th>
+      <th>Model</th>
+      <th>Year</th>
+      <th>Price</th>
+      <th>Added By</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (history.length > 0) { %>
+      <% history.forEach(record => { %>
         <tr>
-          <td colspan="6">No history found.</td>
+          <td><%= record.make %></td>
+          <td><%= record.model %></td>
+          <td><%= record.year %></td>
+          <td>
+            <% if (record.price !== null && record.price !== undefined && !isNaN(record.price)) { %>
+              $<%= Number(record.price).toFixed(2) %>
+            <% } else { %>
+              Unknown
+            <% } %>
+          </td>
+          <td>
+            <%= record.account_firstname ? record.account_firstname + " " + record.account_lastname : "Unknown" %>
+          </td>
+          <td><%= new Date(record.change_date).toLocaleString() %></td>
         </tr>
-      <% } %>
-    </tbody>
-  </table>
-
-
-
+      <% }) %>
+    <% } else { %>
+      <tr>
+        <td colspan="6">No history found.</td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>

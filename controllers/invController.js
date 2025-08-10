@@ -190,23 +190,20 @@ invCont.addInventory = async function (req, res) {
 
   try {
     
-    const result = await invModel.addInventory(req.body);
+    const vehicle = await invModel.addInventory(req.body);
 
-    if (result) {
-      
-      const { inv_make, inv_model, inv_year, inv_price } = req.body;
+    if (vehicle) {
       const userId = req.session.account_id; 
 
       await historyModel.logVehicleAddition(
-        result.inv_id,
-        inv_make,
-        inv_model,
-        inv_year,
-        inv_price,
+        vehicle.inv_id,
+        vehicle.inv_make,
+        vehicle.inv_model,
+        vehicle.inv_year,
+        vehicle.inv_price,
         userId
       );
 
-      
       req.flash("notice", "New vehicle added.");
       return res.redirect("/inv");
     } else {
@@ -231,6 +228,7 @@ invCont.addInventory = async function (req, res) {
     });
   }
 };
+
 
 /* ***************************
  *  Return Inventory by Classification As JSON
