@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
+const historyModel = require("../models/historyModel");
 
 const invCont = {}
 
@@ -79,36 +80,73 @@ invCont.buildManageInventory = async function (req, res, next) {
   }
 }
 
+
+
 invCont.buildAddClassification = async function (req, res, next) {
   try {
     let nav = await utilities.getNav();
+    const success = req.flash("success");
+    const notice = req.flash("notice");
+
+    let message = success.length > 0 ? success[0] : notice.length > 0 ? notice[0] : null;
+    let messageType = success.length > 0 ? "success" : notice.length > 0 ? "error" : null;
+
     res.render("inventory/add-classification", {
       title: "Add Classification",
-
       nav,
+      message: message || null,
+      messageType: messageType || null,
+      errors: [],
+      classification_name: "" // valor vacío al iniciar
     });
   } catch (err) {
     next(err);
   }
-}
+};
 
 invCont.addClassification = async function (req, res, next) {
   const { classification_name } = req.body;
+  let nav = await utilities.getNav();
+
+  const validName = /^[a-zA-Z0-9\s]+$/.test(classification_name);
+  if (!validName) {
+    return res.status(400).render("inventory/add-classification", {
+      title: "Add Classification",
+      nav,
+      message: "Invalid classification name.",
+      messageType: "error",
+      errors: [{ msg: "Only letters, numbers, and spaces allowed." }],
+      classification_name
+    });
+  }
+
   try {
     const data = await invModel.addNewClassification(classification_name);
 
     if (data) {
-      req.flash("success", `Congratulations, you have registered a new classification: ${classification_name}`);
-      res.redirect("/inv"); 
+      const userId = res.locals.accountData ? res.locals.accountData.account_id : null;
+      
+      await historyModel.logClassificationChange(classification_name, "create", userId);
+
+      req.flash("success", `New classification: ${classification_name}`);
+      return res.redirect("/inv");
     } else {
-      req.flash("notice", "Sorry, the registration failed.");
-      res.redirect("/inv/add-classification"); 
+      return res.status(400).render("inventory/add-classification", {
+        title: "Add Classification",
+        nav,
+        message: "Database insert failed.",
+        messageType: "error",
+        errors: [{ msg: "Error saving classification." }],
+        classification_name
+      });
     }
   } catch (error) {
     console.error("error in addClassification:", error);
     next(error);
   }
 };
+
+
 
 
 invCont.buildAddInventory = async function (req, res, next) {
@@ -133,7 +171,7 @@ invCont.buildAddInventory = async function (req, res, next) {
       inv_price: "",
       inv_miles: "",
       inv_color: "",
-      errors: null
+      errors: []
     })
   } catch (error) {
     console.error(error)
@@ -151,9 +189,24 @@ invCont.addInventory = async function (req, res) {
   let message = success.length > 0 ? success[0] : notice.length > 0 ? notice[0] : null;
 
   try {
+    
     const result = await invModel.addInventory(req.body);
 
     if (result) {
+      
+      const { inv_make, inv_model, inv_year, inv_price } = req.body;
+      const userId = req.session.account_id; 
+
+      await historyModel.logVehicleAddition(
+        result.inv_id,
+        inv_make,
+        inv_model,
+        inv_year,
+        inv_price,
+        userId
+      );
+
+      
       req.flash("notice", "New vehicle added.");
       return res.redirect("/inv");
     } else {
@@ -274,6 +327,7 @@ invCont.updateInventory = async function (req, res, next) {
 
   if (updateResult) {
     const itemName = updateResult.inv_make + " " + updateResult.inv_model
+    
     req.flash("notice", `The ${itemName} was successfully updated.`)
     res.redirect("/inv/")
   } else {
@@ -343,6 +397,38 @@ invCont.deleteInventoryItem = async function (req, res, next) {
     next(error)
   }
 }
+
+invCont.buildHistoryView = async function (req, res, next) {
+  try {
+    const nav = await utilities.getNav();
+    const history = await historyModel.getClassificationHistory();
+
+    res.render("inventory/classification-history", {
+      title: "Classification Change History",
+      nav,
+      history
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+invCont.buildVehicleHistory = async function (req, res, next) {
+  try {
+    const nav = await utilities.getNav();
+    const history = await historyModel.getVehicleHistory();
+    res.render("inventory/vehicle-history", {
+      title: "Vehicle History",
+      nav,
+      history
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+
 
 
 

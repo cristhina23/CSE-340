@@ -10,11 +10,11 @@ const invValidate = {}
 invValidate.classificationRules = () => {
   return [
     body("classification_name")
-      .trim()
-      .escape()
-      .notEmpty()
-      .isLength({ min: 3 })
-      .withMessage("Please provide a classification name."),
+  .trim()
+  .isLength({ min: 2 })
+  .withMessage("Classification name must be at least 2 characters long.")
+  .matches(/^[A-Za-z0-9\s]+$/)
+  .withMessage("Only letters, numbers, and spaces are allowed. No special characters.")
   ]
 }
 

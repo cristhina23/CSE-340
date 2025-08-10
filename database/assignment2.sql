@@ -38,3 +38,32 @@ WHERE account_email = 'happy@340.edu';
 UPDATE public.account
 SET account_type = 'Admin'
 WHERE account_email = 'manager@340.edu';
+
+
+
+DROP TABLE IF EXISTS classification_history;
+
+CREATE TABLE classification_history (
+  history_id SERIAL PRIMARY KEY,
+  classification_name VARCHAR(100) NOT NULL,
+  action VARCHAR(20) NOT NULL, -- Ej: 'ADD', 'UPDATE', 'DELETE'
+  user_id INT,
+  change_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES account(account_id) ON DELETE SET NULL
+);
+
+
+DROP TABLE IF EXISTS vehicle_history;
+
+CREATE TABLE vehicle_history (
+  history_id SERIAL PRIMARY KEY,
+  inv_id INT NOT NULL,
+  make VARCHAR(50) NOT NULL,
+  model VARCHAR(50) NOT NULL,
+  year INT NOT NULL,
+  price NUMERIC(10,2) NOT NULL,
+  added_by INT, -- ID del usuario que agregó
+  change_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (inv_id) REFERENCES inventory(inv_id) ON DELETE CASCADE,
+  FOREIGN KEY (added_by) REFERENCES account(account_id) ON DELETE SET NULL
+);

@@ -667,6 +667,18 @@ button:disabled {
   color: #555;
 }
 
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.history-table th, .history-table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
+
 /* Media Queries  medium screens*/
 @media screen and (min-width: 768px) {
   body {

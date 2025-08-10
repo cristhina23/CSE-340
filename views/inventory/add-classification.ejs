@@ -1,23 +1,36 @@
 <div class="form-container">
   <h1><%= title %></h1>
 
-    
+  <% if (typeof message !== "undefined" && message) { %>
+    <div class="flash-message <%= messageType || '' %>"><%= message %></div>
+  <% } %>
+
+  <% if (typeof errors !== "undefined" && errors.length > 0) { %>
+    <div class="error-container">
+      <ul>
+        <% errors.forEach(err => { %>
+          <li><%= err.msg %></li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
 
   <div class="form-card">
     <form action="/inv/add-classification" method="post" class="form-card" id="addClassificationForm" novalidate>
       <p class="password-requirements">Field is required</p>
-      <label for="classification_name">Clasification Name</label>
+      <label for="classification_name">Classification Name</label>
       <input
         type="text"
         id="classification_name"
         name="classification_name"
         placeholder="ex: SUV"
+        value="<%= typeof classification_name !== 'undefined' ? classification_name : '' %>"
         required
-        pattern="^[A-Za-z0-9]+$"
+        pattern="^[A-Za-z0-9\s]+$"
         maxlength="100"
       />
       <p class="password-requirements">Name must be alphabetic characters only</p>
-      <button type="submit" class="btn mt">Add Clasification</button>
+      <button type="submit" class="btn mt">Add Classification</button>
     </form>
   </div>
 </div>

@@ -3,6 +3,7 @@ const router = new express.Router()
 const invController = require("../controllers/invController")
 const Utilities = require("../utilities/")
 const invValidate = require("../utilities/inventory-validation")
+const invCont = require("../controllers/invController")
 
 // --------------------
 // Vistas públicas (sin login)
@@ -88,5 +89,11 @@ router.post(
   Utilities.checkAccountType,
   Utilities.handleErrors(invController.deleteInventoryItem)
 )
+
+router.get("/classification-history", Utilities.checkLogin, invCont.buildHistoryView);
+
+
+router.get("/vehicle-history", Utilities.checkLogin, invCont.buildVehicleHistory);
+
 
 module.exports = router

@@ -1,0 +1,73 @@
+h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 0.9rem;
+}
+
+thead {
+  background: #0074D9;
+  color: white;
+}
+
+th,
+td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+td {
+  word-wrap: break-word;
+}
+
+/* Responsive table: scroll in mobile */
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+/* ====== Medium screens (tablets) ====== */
+@media (min-width: 600px) {
+  body {
+    font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  table {
+    font-size: 1rem;
+  }
+}
+
+/* ====== Large screens (desktops) ====== */
+@media (min-width: 1024px) {
+  body {
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  h1 {
+    text-align: left;
+    margin-left: 0.5rem;
+  }
+
+  .table-container {
+    margin: 1rem auto;
+  }
+}
