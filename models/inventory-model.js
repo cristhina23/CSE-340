@@ -67,7 +67,7 @@ async function addInventory(data) {
       data.classification_id
     ];
     const result = await pool.query(sql, values);
-    return result.rows[0]; // 👈 Ahora devolvemos el vehículo entero
+    return result.rows[0]; 
   } catch (err) {
     console.error("Inventory insert error:", err);
     return null;
